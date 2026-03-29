@@ -1,0 +1,22 @@
+@media (max-width: 600px) {
+  .header-nav {
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+  }
+  
+  .header-right {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .header-link, .header-user, .header-logout-btn, .theme-toggle-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .header-avatar {
+    display: none;
+  }
+}

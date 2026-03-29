@@ -1,0 +1,11 @@
+.trip-detail-container.light .expense-form-container,
+.trip-detail-container.light .admin-add-person {
+  background-color: #f9f9f9;
+  border-color: #ddd;
+}
+
+.trip-detail-container.light .people-list li,
+.trip-detail-container.light .balances-list li,
+.trip-detail-container.light .expense-item {
+  border-bottom-color: #ddd;
+}

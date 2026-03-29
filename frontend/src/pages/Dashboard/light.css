@@ -1,0 +1,15 @@
+.dashboard-container.light .trip-card {
+  background-color: var(--card-bg-light);
+  border-color: var(--border-light);
+}
+
+.dashboard-container.light .admin-panel {
+  background-color: #f9f9f9;
+  border-color: #eee;
+}
+
+.dashboard-container.light .trip-name-input {
+  background-color: white;
+  border-color: #ccc;
+  color: #333;
+}

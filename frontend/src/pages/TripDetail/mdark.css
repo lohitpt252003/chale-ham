@@ -1,0 +1,10 @@
+@media (max-width: 600px) {
+  .trip-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .trip-left-column, .trip-right-column {
+    min-width: 100%;
+  }
+}

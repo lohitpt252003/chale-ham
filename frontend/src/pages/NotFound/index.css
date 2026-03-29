@@ -1,0 +1,30 @@
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  text-align: center;
+}
+
+.not-found-container h1 {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.not-found-container p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.back-link {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.back-link:hover {
+  background-color: #2980b9;
+}

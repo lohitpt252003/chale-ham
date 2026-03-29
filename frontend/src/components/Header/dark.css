@@ -1,0 +1,24 @@
+.header-nav.dark {
+  background-color: var(--header-bg-dark);
+  color: var(--header-text-dark);
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.header-nav.dark .header-logo, .header-nav.dark .header-link {
+  color: var(--header-text-dark);
+}
+
+.header-nav.dark .header-link:hover {
+  text-decoration: underline;
+}
+
+.header-nav.dark .header-logout-btn {
+  background-color: #c0392b;
+  color: white;
+}
+
+.header-nav.dark .theme-toggle-btn {
+  background-color: #333;
+  color: #f0f0f0;
+  border: 1px solid #555;
+}

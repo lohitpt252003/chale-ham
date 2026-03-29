@@ -1,0 +1,4 @@
+/* Profile Light Theme Styles */
+.profile-container.light {
+  color: var(--text-light);
+}

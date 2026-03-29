@@ -1,0 +1,18 @@
+.trip-detail-container.dark .expense-form-container,
+.trip-detail-container.dark .admin-add-person {
+  background-color: #222;
+  border-color: #333;
+}
+
+.trip-detail-container.dark .expense-form input,
+.trip-detail-container.dark .person-form input {
+  background-color: #333;
+  color: white;
+  border-color: #444;
+}
+
+.trip-detail-container.dark .people-list li,
+.trip-detail-container.dark .balances-list li,
+.trip-detail-container.dark .expense-item {
+  border-bottom-color: #333;
+}

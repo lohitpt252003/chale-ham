@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+httpx
+requests
+python-dotenv
+google-auth
+pydantic[email]
+motor
+pymongo

@@ -1,0 +1,4 @@
+/* Profile Dark Theme Styles */
+.profile-container.dark {
+  color: var(--text-dark);
+}

@@ -1,0 +1,19 @@
+.dashboard-container.dark .trip-card {
+  background-color: var(--card-bg-dark);
+  border-color: var(--border-dark);
+}
+
+.dashboard-container.dark .trip-card:hover {
+  background-color: #383838;
+}
+
+.dashboard-container.dark .admin-panel {
+  background-color: #222;
+  border-color: #333;
+}
+
+.dashboard-container.dark .trip-name-input {
+  background-color: #333;
+  border-color: #444;
+  color: white;
+}

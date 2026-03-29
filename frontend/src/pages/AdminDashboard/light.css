@@ -1,0 +1,7 @@
+.admin-dashboard-container.light .admin-table th {
+  border-bottom-color: #ddd;
+}
+
+.admin-dashboard-container.light .admin-table td {
+  border-bottom-color: #eee;
+}

@@ -1,0 +1,82 @@
+.trip-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 50px;
+}
+
+.trip-content {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.trip-left-column, .trip-right-column {
+  flex: 1;
+  min-width: 300px;
+}
+
+.people-list, .balances-list, .expenses-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.people-list li, .balances-list li {
+  padding: 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.expense-item {
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.expense-header {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.expense-form-container, .admin-add-person {
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border: 1px solid;
+}
+
+.expense-form input, .person-form input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.split-selection {
+  margin-bottom: 15px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+}
+
+.submit-btn:hover {
+  background-color: #2980b9;
+}
