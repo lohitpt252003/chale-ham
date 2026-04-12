@@ -49,6 +49,13 @@ def is_error(dep_result) -> bool:
     return isinstance(dep_result, JSONResponse)
 
 
+# ── Home ─────────────────────────────────────────────────────────────────────
+
+@app.get("/")
+async def home():
+    return {"status": "connected", "message": "Chale-Ham Backend is running"}
+
+
 # ── Auth ─────────────────────────────────────────────────────────────────────
 
 @app.get("/me")
