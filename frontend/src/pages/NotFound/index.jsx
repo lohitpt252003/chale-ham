@@ -6,12 +6,13 @@ import './dark.css';
 import './mlight.css';
 import './mdark.css';
 
-function NotFound({ theme }) {
+function NotFound() {
   return (
-    <div className={`not-found-container ${theme}`}>
-      <h1>404 - Not Found</h1>
-      <p>Oops! The page you are looking for doesn't exist.</p>
-      <Link to="/dashboard" className="back-link">Go to Dashboard</Link>
+    <div className="not-found">
+      <div className="not-found-icon">✈️</div>
+      <h1 className="not-found-title">404 — Lost in transit</h1>
+      <p className="not-found-sub">This page doesn't exist.</p>
+      <Link to="/dashboard" className="btn btn-primary">Back to Dashboard</Link>
     </div>
   );
 }

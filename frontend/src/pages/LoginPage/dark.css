@@ -1,2 +1,12 @@
-/* Login Page Dark */
-.login-page.dark { background-color: var(--bg-dark); }
+.dark .landing { background: #0f1117; }
+.dark .landing-badge { background: #1a1d2e; border-color: #2e3148; color: #9ca3af; }
+.dark .landing-title { color: #e8eaf6; }
+.dark .landing-subtitle { color: #9ca3af; }
+.dark .landing-login-hint { color: #6b7280; }
+.dark .landing-features-title { color: #e8eaf6; }
+.dark .landing-feature-card { background: #1a1d2e; border-color: #2e3148; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+.dark .landing-feature-title { color: #e8eaf6; }
+.dark .landing-feature-desc  { color: #9ca3af; }
+.dark .landing-footer { border-top-color: #2e3148; color: #6b7280; }
+.dark .landing-orb-1 { opacity: 0.4; }
+.dark .landing-orb-2 { opacity: 0.35; }

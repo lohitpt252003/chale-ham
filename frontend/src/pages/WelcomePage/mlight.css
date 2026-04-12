@@ -1,0 +1,4 @@
+@media (max-width: 640px) {
+  .light .welcome-card { padding: 36px 24px; }
+  .light .welcome-name { font-size: 1.4rem; }
+}

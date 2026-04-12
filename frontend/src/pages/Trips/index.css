@@ -1,0 +1,98 @@
+.trips-page { padding: 0 0 48px; }
+
+.trips-page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 32px 0 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.trips-page-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.trips-page-sub { font-size: 0.875rem; color: var(--text-muted); }
+
+.trips-page-search {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+.trips-section { margin-bottom: 36px; }
+
+.trips-section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.trips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 14px;
+}
+
+.trips-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.trips-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.trips-card-discover { cursor: default; }
+.trips-card-discover:hover { transform: none; box-shadow: var(--shadow); }
+
+.trips-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.trips-card-emoji { font-size: 1.6rem; line-height: 1; }
+
+.trips-card-tier {
+  font-size: 1rem;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.trips-card-tier.active  { background: var(--green-light); }
+.trips-card-tier.archived { background: var(--accent-light); }
+
+.trips-card-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 6px;
+  word-break: break-word;
+}
+
+.trips-card-hint { font-size: 0.78rem; color: var(--text-muted); margin-top: auto; }
+
+.trips-card-join-btn {
+  margin-top: 10px;
+  width: 100%;
+  justify-content: center;
+}

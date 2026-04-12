@@ -1,24 +1,18 @@
-.header-nav.dark {
-  background-color: var(--header-bg-dark);
-  color: var(--header-text-dark);
-  border-bottom: 1px solid var(--border-dark);
+.dark .header-nav {
+  background: rgba(26, 29, 46, 0.88);
+  border-bottom-color: #2e3148;
+  box-shadow: 0 1px 0 #2e3148, 0 4px 24px rgba(0,0,0,0.3);
 }
 
-.header-nav.dark .header-logo, .header-nav.dark .header-link {
-  color: var(--header-text-dark);
-}
+.dark .header-nav-link { color: #9ca3af; }
+.dark .header-nav-link:hover { background: #232639; color: #e8eaf6; }
+.dark .header-nav-link.active { background: #1e2240; color: #7c8ff8; }
 
-.header-nav.dark .header-link:hover {
-  text-decoration: underline;
-}
+.dark .header-theme-btn { border-color: #2e3148; color: #9ca3af; }
+.dark .header-theme-btn:hover { background: #232639; border-color: #7c8ff8; }
 
-.header-nav.dark .header-logout-btn {
-  background-color: #c0392b;
-  color: white;
-}
+.dark .header-logout-btn { border-color: #2e3148; color: #9ca3af; }
+.dark .header-logout-btn:hover { background: #450a0a; color: #f87171; border-color: #450a0a; }
 
-.header-nav.dark .theme-toggle-btn {
-  background-color: #333;
-  color: #f0f0f0;
-  border: 1px solid #555;
-}
+.dark .header-avatar { box-shadow: 0 0 0 2px #2e3148; }
+.dark .header-avatar:hover { box-shadow: 0 0 0 2px #7c8ff8; }

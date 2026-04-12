@@ -1,22 +1,11 @@
 .footer {
-  padding: 20px;
+  border-top: 1px solid var(--border);
+  padding: 14px 24px;
   text-align: center;
-  margin-top: auto;
+  transition: background var(--transition), border-color var(--transition);
 }
 
-.footer-content p {
-  margin: 0;
-  font-size: 14px;
-}
-
-.footer.light {
-  background-color: #eee;
-  color: #666;
-  border-top: 1px solid #ddd;
-}
-
-.footer.dark {
-  background-color: #111;
-  color: #888;
-  border-top: 1px solid #333;
+.footer-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }

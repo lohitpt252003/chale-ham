@@ -1,4 +1,5 @@
-/* Admin Dashboard Mobile Dark */
-@media (max-width: 600px) {
-  .admin-table { font-size: 14px; }
+@media (max-width: 640px) {
+  .dark .admin-dashboard-req-item { flex-wrap: wrap; }
+  .dark .admin-dashboard-req-actions { width: 100%; }
+  .dark .admin-dashboard-req-actions .btn { flex: 1; justify-content: center; }
 }

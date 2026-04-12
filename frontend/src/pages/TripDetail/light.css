@@ -1,11 +1,24 @@
-.trip-detail-container.light .expense-form-container,
-.trip-detail-container.light .admin-add-person {
-  background-color: #f9f9f9;
-  border-color: #ddd;
-}
+.light .trip-detail-expense-item { background: #ffffff; border-color: #e2e4ea; }
+.light .trip-detail-expense-item:hover { border-color: #eef0ff; background: #fafbff; }
+.light .trip-detail-expense-title { color: #1a1d2e; }
+.light .trip-detail-expense-meta  { color: #6b7280; }
+.light .trip-detail-expense-notes { color: #9ca3af; }
 
-.trip-detail-container.light .people-list li,
-.trip-detail-container.light .balances-list li,
-.trip-detail-container.light .expense-item {
-  border-bottom-color: #ddd;
-}
+.light .trip-detail-balance-item { background: #ffffff; border-color: #e2e4ea; }
+.light .trip-detail-balance-label { color: #1a1d2e; }
+
+.light .trip-detail-settlement-item { background: #ffffff; border-color: #e2e4ea; }
+.light .trip-detail-settlement-info { color: #1a1d2e; }
+
+.light .trip-detail-stat-summary { background: #ffffff; border-color: #e2e4ea; }
+.light .trip-detail-stat-card     { background: #ffffff; border-color: #e2e4ea; }
+.light .trip-detail-stat-bar-bg   { background: #f0f1f5; }
+.light .trip-detail-stat-row-name { color: #1a1d2e; }
+.light .trip-detail-stat-row-amount { color: #1a1d2e; }
+
+.light .trip-detail-members-card  { background: #ffffff; border-color: #e2e4ea; }
+.light .trip-detail-member-item   { border-bottom-color: #e2e4ea; }
+.light .trip-detail-member-name   { color: #1a1d2e; }
+.light .trip-detail-member-email  { color: #6b7280; }
+
+.light .trip-detail-settle-hint { background: #fef3c7; color: #f59e0b; }

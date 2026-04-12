@@ -1,4 +1,6 @@
-/* Footer Dark Theme Styles */
-.footer.dark {
-  background-color: #111;
+.dark .footer {
+  background: #1a1d2e;
+  border-top-color: #2e3148;
 }
+
+.dark .footer-text { color: #6b7280; }

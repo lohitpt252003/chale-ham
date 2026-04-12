@@ -54,6 +54,17 @@ class GitHubService:
             return response.json()
 
     @staticmethod
+    async def delete_file(path: str, message: str, sha: str):
+        payload = {
+            "message": message,
+            "sha": sha
+        }
+        async with httpx.AsyncClient() as client:
+            response = await client.request("DELETE", f"{BASE_URL}/{path}", headers=headers, json=payload)
+            if response.status_code not in [200, 404]:
+                response.raise_for_status()
+
+    @staticmethod
     async def create_trip(trip_name: str):
         # Create people.json
         await GitHubService.update_file(
@@ -141,7 +152,7 @@ class GitHubService:
         new_expenses = [e for e in expenses if e.get("id") != expense_id]
         
         if len(new_expenses) == len(expenses):
-            return expenses # Nothing removed
+            return None # Changed to return None to properly indicate not found
             
         await GitHubService.update_file(
             f"trips/{trip_name}/expenses.json",
@@ -210,65 +221,4 @@ class GitHubService:
             result["sha"]
         )
 
-    @staticmethod
-    async def get_user(email: str) -> Optional[Dict[str, Any]]:
-        result = await GitHubService.get_file_content(f"users/{email}/profile.json")
-        return result["content"] if result else None
 
-    @staticmethod
-    async def upsert_user(user_data: Dict[str, Any]):
-        email = user_data["email"]
-        existing = await GitHubService.get_user(email)
-        sha = None
-        if existing:
-            # Preserve status and admin rights if updating
-            user_data["is_active"] = existing.get("is_active", True)
-            user_data["is_admin"] = existing.get("is_admin", email == os.getenv("ADMIN_EMAIL"))
-            result = await GitHubService.get_file_content(f"users/{email}/profile.json")
-            sha = result["sha"]
-        else:
-            user_data["is_active"] = True
-            user_data["is_admin"] = email == os.getenv("ADMIN_EMAIL")
-        
-        user_data["last_login"] = datetime.now().isoformat()
-        
-        await GitHubService.update_file(
-            f"users/{email}/profile.json",
-            user_data,
-            f"Update profile for {email}",
-            sha
-        )
-        return user_data
-
-    @staticmethod
-    async def list_users() -> List[Dict[str, Any]]:
-        async with httpx.AsyncClient() as client:
-            response = await client.get(f"{BASE_URL}/users", headers=headers)
-            if response.status_code == 200:
-                contents = response.json()
-                emails = [item["name"] for item in contents if item["type"] == "dir"]
-                users = []
-                for email in emails:
-                    u = await GitHubService.get_user(email)
-                    if u:
-                        users.append(u)
-                return users
-            return []
-
-    @staticmethod
-    async def set_user_status(email: str, is_active: bool):
-        user = await GitHubService.get_user(email)
-        if not user:
-            return None
-        
-        user["is_active"] = is_active
-        result = await GitHubService.get_file_content(f"users/{email}/profile.json")
-        sha = result["sha"]
-        
-        await GitHubService.update_file(
-            f"users/{email}/profile.json",
-            user,
-            f"Set status for {email} to {'active' if is_active else 'inactive'}",
-            sha
-        )
-        return user

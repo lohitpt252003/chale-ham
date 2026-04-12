@@ -1,3 +1,6 @@
 .env
 venv/
 prompt.md
+.claude
+.vscode
+node_modules/

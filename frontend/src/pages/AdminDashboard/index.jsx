@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import './index.css';
 import './light.css';
@@ -6,143 +7,192 @@ import './dark.css';
 import './mlight.css';
 import './mdark.css';
 
-function AdminDashboard({ user, theme }) {
-  const [users, setUsers] = useState([]);
-  const [requests, setRequests] = useState([]); // Array of {trip, requests[]}
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+const API = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const authHeader = () => ({ Authorization: `Bearer ${localStorage.getItem('token')}` });
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+function AdminDashboard({ user }) {
+  const [users, setUsers] = useState([]);
+  const [trips, setTrips] = useState([]);
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [processingTrip, setProcessingTrip] = useState(null);
+
+  useEffect(() => { fetchData(); }, []);
 
   const fetchData = async () => {
     setLoading(true);
-    const token = localStorage.getItem('token');
     try {
       const [uRes, tRes] = await Promise.all([
-        axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/users`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/trips`, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
+        axios.get(`${API}/users`, { headers: authHeader() }),
+        axios.get(`${API}/trips/status`, { headers: authHeader() }),
       ]);
       setUsers(uRes.data);
-      
-      // Fetch requests for all trips
-      const reqPromises = tRes.data.map(trip => 
-        axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/trips/${trip}/requests`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }).then(res => ({ trip, reqs: res.data }))
+      setTrips(tRes.data);
+
+      const reqData = await Promise.all(
+        tRes.data.map(t =>
+          axios.get(`${API}/trips/${t.name}/requests`, { headers: authHeader() })
+            .then(r => ({ trip: t.name, reqs: r.data }))
+            .catch(() => ({ trip: t.name, reqs: [] }))
+        )
       );
-      const allReqs = await Promise.all(reqPromises);
-      setRequests(allReqs.filter(r => r.reqs.length > 0));
-      
-    } catch (err) {
-      console.error(err);
-      setError("Failed to fetch admin data.");
+      setRequests(reqData.filter(r => r.reqs.length > 0));
+    } catch {
+      toast.error('Failed to load admin data.');
     } finally {
       setLoading(false);
     }
   };
 
-  const toggleUserStatus = async (email, currentStatus) => {
-    const token = localStorage.getItem('token');
+  const toggleUserStatus = async (email, current) => {
     try {
-      await axios.put(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/users/${email}/status?is_active=${!currentStatus}`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.put(`${API}/users/${email}/status?is_active=${!current}`, {}, { headers: authHeader() });
+      toast.success(`User ${!current ? 'activated' : 'deactivated'}.`);
       fetchData();
-    } catch (err) {
-      console.error(err);
-      alert("Failed to update user status.");
-    }
+    } catch { toast.error('Failed to update user.'); }
+  };
+
+  const toggleTripStatus = async (tripName, current) => {
+    setProcessingTrip(tripName);
+    try {
+      await axios.put(`${API}/trips/${tripName}/status?is_active=${!current}`, {}, { headers: authHeader() });
+      toast.success(`Trip migrated to ${!current ? 'MongoDB' : 'GitHub archive'}.`);
+      fetchData();
+    } catch { toast.error('Failed to migrate trip.'); }
+    finally { setProcessingTrip(null); }
   };
 
   const handleRequest = async (trip, email, action) => {
-    const token = localStorage.getItem('token');
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/trips/${trip}/requests/${email}/${action}`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.post(`${API}/trips/${trip}/requests/${email}/${action}`, {}, { headers: authHeader() });
+      toast.success(`Request ${action}d.`);
       fetchData();
-    } catch (err) {
-      console.error(err);
-      alert(`Failed to ${action} request.`);
-    }
+    } catch { toast.error(`Failed to ${action} request.`); }
   };
 
-  if (!user.isAdmin) {
-    return <div className={`admin-denied ${theme}`}>Access Denied</div>;
-  }
+  if (loading) return <div className="loading-screen">Loading admin panel...</div>;
+
+  const pendingCount = requests.reduce((s, r) => s + r.reqs.length, 0);
 
   return (
-    <div className={`admin-dashboard-container ${theme}`}>
+    <div className="admin-dashboard">
       <h2>Admin Dashboard</h2>
-      {error && <p className="error-message">{error}</p>}
-      
-      <h3>Pending Trip Requests</h3>
-      {requests.length === 0 ? <p>No pending requests.</p> : (
-        <div className="requests-section">
-          {requests.map(tripReq => (
-            <div key={tripReq.trip} className="trip-request-group">
-              <h4>Trip: {tripReq.trip}</h4>
-              <ul className="req-list">
-                {tripReq.reqs.map(r => (
-                  <li key={r.email} className="req-item">
-                    <span>{r.name} ({r.email})</span>
-                    <div className="req-btns">
-                      <button onClick={() => handleRequest(tripReq.trip, r.email, 'approve')} className="approve-btn">Approve</button>
-                      <button onClick={() => handleRequest(tripReq.trip, r.email, 'reject')} className="reject-btn">Reject</button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      )}
 
-      <h3 style={{ marginTop: '40px' }}>User Management</h3>
-        <div className="table-responsive">
-          <table className="admin-table">
+      {/* Join Requests */}
+      <div className="admin-dashboard-section">
+        <div className="admin-dashboard-section-header">
+          <h3>Join Requests</h3>
+          {pendingCount > 0 && <span className="badge badge-amber">{pendingCount} pending</span>}
+        </div>
+        {requests.length === 0 ? (
+          <div className="card" style={{ textAlign: 'center', padding: '32px', color: 'var(--text-muted)' }}>
+            No pending requests.
+          </div>
+        ) : requests.map(tripReq => (
+          <div key={tripReq.trip} className="admin-dashboard-req-group">
+            <div className="admin-dashboard-req-title">{tripReq.trip}</div>
+            {tripReq.reqs.map(r => (
+              <div key={r.email} className="admin-dashboard-req-item">
+                <div className="avatar-initials">{r.name.charAt(0).toUpperCase()}</div>
+                <div className="admin-dashboard-req-info">
+                  <div className="admin-dashboard-req-name">{r.name}</div>
+                  <div className="admin-dashboard-req-email">{r.email}</div>
+                </div>
+                <div className="admin-dashboard-req-actions">
+                  <button className="btn btn-success btn-sm" onClick={() => handleRequest(tripReq.trip, r.email, 'approve')}>Approve</button>
+                  <button className="btn btn-ghost btn-sm" style={{ color: 'var(--red)', borderColor: 'var(--red)' }} onClick={() => handleRequest(tripReq.trip, r.email, 'reject')}>Reject</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      {/* Trip Storage */}
+      <div className="admin-dashboard-section">
+        <div className="admin-dashboard-section-header">
+          <h3>Trip Storage Tier</h3>
+        </div>
+        <div className="table-wrap">
+          <table>
             <thead>
-              <tr>
-                <th>User</th>
-                <th>Email</th>
-                <th>Admin</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
+              <tr><th>Trip</th><th>Storage</th><th>Action</th></tr>
             </thead>
             <tbody>
-              {users.map(u => (
-                <tr key={u.email}>
-                  <td className="user-cell">
-                    {u.picture && <img src={u.picture} alt="" className="user-avatar" />}
-                    {u.name}
-                  </td>
-                  <td>{u.email}</td>
-                  <td>{u.is_admin ? 'Yes' : 'No'}</td>
+              {trips.map(t => (
+                <tr key={t.name}>
+                  <td className="fw-600">{t.name}</td>
                   <td>
-                    <span className={`status-badge ${u.is_active ? 'active' : 'inactive'}`}>
-                      {u.is_active ? 'Active' : 'Inactive'}
+                    <span className={`badge ${t.is_active ? 'badge-green' : 'badge-accent'}`}>
+                      {t.is_active ? '⚡ MongoDB' : '📦 GitHub Archive'}
                     </span>
                   </td>
                   <td>
-                    {u.email !== user.email && (
-                      <button onClick={() => toggleUserStatus(u.email, u.is_active)} className="status-toggle-btn">
-                        {u.is_active ? 'Deactivate' : 'Activate'}
-                      </button>
-                    )}
+                    <button
+                      className="btn btn-ghost btn-sm"
+                      onClick={() => toggleTripStatus(t.name, t.is_active)}
+                      disabled={processingTrip === t.name}
+                    >
+                      {processingTrip === t.name ? 'Migrating...' : t.is_active ? 'Archive to GitHub' : 'Cache in MongoDB'}
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      )}
+      </div>
+
+      {/* Users */}
+      <div className="admin-dashboard-section">
+        <div className="admin-dashboard-section-header">
+          <h3>User Management</h3>
+        </div>
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr><th>User</th><th>Email</th><th>Role</th><th>Status</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+              {users.map(u => (
+                <tr key={u.email}>
+                  <td>
+                    <div className="admin-dashboard-user-cell">
+                      {u.picture
+                        ? <img src={u.picture} alt="" className="avatar" />
+                        : <div className="avatar-initials">{u.name?.charAt(0).toUpperCase()}</div>
+                      }
+                      {u.name}
+                    </div>
+                  </td>
+                  <td className="color-muted" style={{ fontSize: '0.85rem' }}>{u.email}</td>
+                  <td>
+                    {u.is_admin
+                      ? <span className="badge badge-accent">Admin</span>
+                      : <span className="badge badge-muted">Member</span>}
+                  </td>
+                  <td>
+                    <span className={`badge ${u.is_active ? 'badge-green' : 'badge-red'}`}>
+                      {u.is_active ? 'Active' : 'Inactive'}
+                    </span>
+                  </td>
+                  <td>
+                    {u.email !== user.email ? (
+                      <button
+                        className={`btn btn-sm ${u.is_active ? 'btn-ghost' : 'btn-success'}`}
+                        style={u.is_active ? { color: 'var(--red)', borderColor: 'var(--red)' } : {}}
+                        onClick={() => toggleUserStatus(u.email, u.is_active)}
+                      >
+                        {u.is_active ? 'Deactivate' : 'Activate'}
+                      </button>
+                    ) : <span className="color-muted" style={{ fontSize: '0.8rem' }}>You</span>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

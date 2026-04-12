@@ -1,17 +1,4 @@
-.admin-dashboard-container.dark .admin-table th {
-  border-bottom-color: #444;
-}
-
-.admin-dashboard-container.dark .admin-table td {
-  border-bottom-color: #333;
-}
-
-.admin-dashboard-container.dark .status-toggle-btn {
-  background-color: #333;
-  color: #f0f0f0;
-  border-color: #555;
-}
-
-.admin-dashboard-container.dark .status-toggle-btn:hover {
-  background-color: #444;
-}
+.dark .admin-dashboard-req-group { background: #1a1d2e; border-color: #2e3148; }
+.dark .admin-dashboard-req-item  { border-bottom-color: #2e3148; }
+.dark .admin-dashboard-req-name  { color: #e8eaf6; }
+.dark .admin-dashboard-req-email { color: #6b7280; }

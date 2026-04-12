@@ -1,0 +1,10 @@
+.light .trips-page-header { border-bottom-color: #e2e4ea; }
+.light .trips-page-title  { color: #1a1d2e; }
+.light .trips-page-sub    { color: #9ca3af; }
+.light .trips-section-label { color: #9ca3af; }
+.light .trips-card { background: #ffffff; border-color: #e2e4ea; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+.light .trips-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+.light .trips-card-name { color: #1a1d2e; }
+.light .trips-card-hint { color: #9ca3af; }
+.light .trips-card-tier.active   { background: #d1fae5; }
+.light .trips-card-tier.archived { background: #eef0ff; }

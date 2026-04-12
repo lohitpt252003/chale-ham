@@ -1,0 +1,4 @@
+@media (max-width: 640px) {
+  .dark .welcome-card { padding: 36px 24px; }
+  .dark .welcome-name { font-size: 1.4rem; }
+}

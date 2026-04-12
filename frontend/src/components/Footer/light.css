@@ -1,4 +1,6 @@
-/* Footer Light Theme Styles */
-.footer.light {
-  background-color: #eee;
+.light .footer {
+  background: #ffffff;
+  border-top-color: #e2e4ea;
 }
+
+.light .footer-text { color: #9ca3af; }

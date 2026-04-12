@@ -1,0 +1,142 @@
+.how-to-use {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px 48px;
+}
+
+.how-to-use-header {
+  padding: 32px 0 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+
+.how-to-use-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.how-to-use-subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.how-to-use-body {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.how-to-use-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: sticky;
+  top: 80px;
+}
+
+.how-to-use-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: background 0.15s, color 0.15s;
+  width: 100%;
+}
+
+.how-to-use-nav-btn:hover {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.how-to-use-nav-btn.active {
+  background: var(--accent-light);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.how-to-use-nav-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.how-to-use-content {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  box-shadow: var(--shadow);
+}
+
+.how-to-use-section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.how-to-use-section-icon {
+  font-size: 1.6rem;
+}
+
+.how-to-use-section-title h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.how-to-use-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.how-to-use-step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.how-to-use-step-badge {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.how-to-use-step-body {
+  flex: 1;
+  padding-top: 4px;
+}
+
+.how-to-use-step-heading {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.how-to-use-step-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}

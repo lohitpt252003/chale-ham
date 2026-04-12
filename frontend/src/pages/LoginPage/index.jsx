@@ -1,5 +1,6 @@
 import React from 'react';
 import { GoogleLogin } from '@react-oauth/google';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import './index.css';
 import './light.css';
@@ -7,52 +8,78 @@ import './dark.css';
 import './mlight.css';
 import './mdark.css';
 
-function LoginPage({ login, theme }) {
+const API = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+
+const FEATURES = [
+  { icon: '💸', title: 'Track Expenses',    desc: 'Log every expense with categories, notes, and flexible splits.' },
+  { icon: '⚖️', title: 'Auto Balances',     desc: 'See exactly who owes whom — recalculated on every change.' },
+  { icon: '✅', title: 'Settle Up',          desc: 'Record payments and watch balances clear in real time.' },
+  { icon: '📊', title: 'Trip Stats',         desc: 'Per-person and per-category breakdowns at a glance.' },
+  { icon: '📦', title: 'Free Storage',       desc: 'Active trips in MongoDB, archived trips in GitHub — zero cost.' },
+  { icon: '🌙', title: 'Light & Dark Mode', desc: 'Looks great either way, remembered per browser.' },
+];
+
+function LoginPage({ login }) {
   const onSuccess = async (response) => {
     const token = response.credential;
     localStorage.setItem('token', token);
-    
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/trips`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
+      const res = await axios.get(`${API}/me`, {
+        headers: { Authorization: `Bearer ${token}` }
       });
-      
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      // The backend upserts the user and returns the current user status
-      // In a real flow, we'd have a /me endpoint
-      // For now, we decode what we have, but we should probably fetch the actual profile from backend
-      // since the backend determines if the user is an admin.
-      
-      // Let's assume the first request to /trips worked, so user is active.
-      // We'll need a better way to get is_admin.
-      const user = {
-        name: payload.name,
-        email: payload.email,
-        picture: payload.picture,
-        isAdmin: payload.email === 'ka25eq0346@gmail.com' || payload.email === 'lohit.pinto@gmail.com' // Fallback check
-      };
-      login(user);
+      login({ ...res.data, isAdmin: res.data.is_admin, isActive: res.data.is_active });
     } catch (err) {
-      console.error("Login verification failed", err);
-      alert(err.response?.data?.detail || "Login failed. Check backend.");
+      localStorage.removeItem('token');
+      toast.error('Login failed. Try again.');
     }
   };
 
-  const onError = () => {
-    console.log('Login Failed');
-  };
-
   return (
-    <div className={`login-page ${theme}`}>
-      <div className="login-card">
-        <h1>Welcome to Chale-Ham</h1>
-        <p>Expense sharing for friends</p>
-        <div className="google-login-wrapper">
-          <GoogleLogin onSuccess={onSuccess} onError={onError} />
+    <div className="landing">
+      {/* Hero */}
+      <section className="landing-hero">
+        <div className="landing-hero-bg" aria-hidden="true">
+          <div className="landing-orb landing-orb-1" />
+          <div className="landing-orb landing-orb-2" />
         </div>
-      </div>
+
+        <div className="landing-hero-content">
+          <div className="landing-badge">✈️ For trips with friends</div>
+          <h1 className="landing-title">
+            Split expenses.<br />
+            <span className="landing-title-accent">Stay friends.</span>
+          </h1>
+          <p className="landing-subtitle">
+            Chale Ham makes it effortless to track shared costs, settle debts, and keep everyone on the same page — no spreadsheets needed.
+          </p>
+          <div className="landing-login-wrap">
+            <GoogleLogin
+              onSuccess={onSuccess}
+              onError={() => toast.error('Google login failed')}
+            />
+          </div>
+          <p className="landing-login-hint">No password needed · Sign in with Google</p>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="landing-features">
+        <h2 className="landing-features-title">Everything you need for group trips</h2>
+        <div className="landing-features-grid">
+          {FEATURES.map(f => (
+            <div key={f.title} className="landing-feature-card">
+              <div className="landing-feature-icon">{f.icon}</div>
+              <div className="landing-feature-title">{f.title}</div>
+              <div className="landing-feature-desc">{f.desc}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="landing-footer">
+        <span>© {new Date().getFullYear()} Chale Ham</span>
+      </footer>
     </div>
   );
 }

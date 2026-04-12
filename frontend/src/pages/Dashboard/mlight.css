@@ -1,9 +1,6 @@
-@media (max-width: 600px) {
-  .trips-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .create-trip-form {
-    flex-direction: column;
-  }
+@media (max-width: 640px) {
+  .light .dashboard-trips-grid { grid-template-columns: 1fr 1fr; }
+  .light .dashboard-create-form { flex-direction: column; width: 100%; }
+  .light .dashboard-create-input { width: 100%; }
+  .light .dashboard-header { flex-direction: column; align-items: flex-start; }
 }

@@ -1,117 +1,152 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 import './index.css';
 import './light.css';
 import './dark.css';
 import './mlight.css';
 import './mdark.css';
 
-function Dashboard({ user, theme }) {
+const API = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const authHeader = () => ({ Authorization: `Bearer ${localStorage.getItem('token')}` });
+
+function Dashboard({ user }) {
   const [myTrips, setMyTrips] = useState([]);
   const [allTrips, setAllTrips] = useState([]);
+  const [myRequests, setMyRequests] = useState([]);
+  const [tripStatus, setTripStatus] = useState({});
   const [loading, setLoading] = useState(true);
   const [newTripName, setNewTripName] = useState('');
-  const [error, setError] = useState('');
+  const [creating, setCreating] = useState(false);
+  const [joiningTrips, setJoiningTrips] = useState({});
 
-  useEffect(() => {
-    fetchTrips();
-  }, []);
+  useEffect(() => { fetchTrips(); }, []);
 
   const fetchTrips = async () => {
     setLoading(true);
-    const token = localStorage.getItem('token');
     try {
-      const [myRes, allRes] = await Promise.all([
-        axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/my-trips`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/trips`, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-      ]);
-      setMyTrips(myRes.data);
-      setAllTrips(allRes.data);
-    } catch (err) {
-      console.error(err);
-      setError("Failed to fetch trips.");
+      const requests = [
+        axios.get(`${API}/my-trips`, { headers: authHeader() }),
+        axios.get(`${API}/trips`, { headers: authHeader() }),
+        axios.get(`${API}/my-requests`, { headers: authHeader() }),
+      ];
+      if (user.isAdmin) {
+        requests.push(axios.get(`${API}/trips/status`, { headers: authHeader() }));
+      }
+      const results = await Promise.all(requests);
+      setMyTrips(results[0].data);
+      setAllTrips(results[1].data);
+      setMyRequests(results[2].data);
+      if (user.isAdmin && results[3]) {
+        const map = {};
+        results[3].data.forEach(t => { map[t.name] = t.is_active; });
+        setTripStatus(map);
+      }
+    } catch {
+      toast.error('Failed to load trips.');
     } finally {
       setLoading(false);
     }
   };
 
-  const createTrip = async () => {
-    if (!newTripName) return;
-    const token = localStorage.getItem('token');
+  const handleCreateTrip = async (e) => {
+    e.preventDefault();
+    if (!newTripName.trim()) return;
+    setCreating(true);
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/trips?trip_name=${newTripName}`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.post(`${API}/trips?trip_name=${encodeURIComponent(newTripName.trim())}`, {}, { headers: authHeader() });
       setNewTripName('');
+      toast.success('Trip created!');
       fetchTrips();
-    } catch (err) {
-      console.error(err);
-      alert("Failed to create trip.");
+    } catch {
+      toast.error('Failed to create trip.');
+    } finally {
+      setCreating(false);
     }
   };
 
-  const joinTrip = async (tripName) => {
-    const token = localStorage.getItem('token');
+  const requestJoin = async (tripName) => {
+    setJoiningTrips(p => ({ ...p, [tripName]: true }));
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/trips/${tripName}/join`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      alert(res.data.message);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to send join request.");
+      const res = await axios.post(`${API}/trips/${tripName}/join`, {}, { headers: authHeader() });
+      toast.info(res.data.message);
+      fetchTrips();
+    } catch {
+      toast.error('Failed to send join request.');
+    } finally {
+      setJoiningTrips(p => ({ ...p, [tripName]: false }));
     }
   };
 
   const otherTrips = allTrips.filter(t => !myTrips.includes(t));
 
+  if (loading) return <div className="loading-screen">Loading trips...</div>;
+
   return (
-    <div className={`dashboard-container ${theme}`}>
-      <h2>Your Trips</h2>
-      {error && <p className="error-message">{error}</p>}
-      {loading ? <p>Loading...</p> : (
-        <div className="trips-grid">
-          {myTrips.length === 0 ? <p>No trips yet.</p> : myTrips.map(trip => (
-            <Link key={trip} to={`/trip/${trip}`} className="trip-card-link">
-              <div className="trip-card">
-                <h3>{trip}</h3>
-              </div>
+    <div className="dashboard">
+      <div className="dashboard-header">
+        <h2>Your Trips</h2>
+        {user.isAdmin && (
+          <form onSubmit={handleCreateTrip} className="dashboard-create-form">
+            <input
+              className="dashboard-create-input"
+              type="text"
+              placeholder="New trip name..."
+              value={newTripName}
+              onChange={e => setNewTripName(e.target.value)}
+              required
+            />
+            <button type="submit" className="btn btn-primary" disabled={creating}>
+              {creating ? 'Creating...' : '+ Create'}
+            </button>
+          </form>
+        )}
+      </div>
+
+      {myTrips.length === 0 ? (
+        <div className="empty-state">
+          <div style={{ fontSize: '2rem' }}>🧳</div>
+          <p>{user.isAdmin ? 'Create your first trip above.' : 'Request to join a trip below.'}</p>
+        </div>
+      ) : (
+        <div className="dashboard-trips-grid">
+          {myTrips.map(trip => (
+            <Link key={trip} to={`/trip/${trip}`} className="dashboard-trip-card">
+              <div className="dashboard-trip-card-icon">🗺️</div>
+              <div className="dashboard-trip-card-name">{trip}</div>
+              {user.isAdmin && trip in tripStatus && (
+                <div className={`dashboard-trip-card-storage ${tripStatus[trip] ? 'active' : 'archived'}`}>
+                  {tripStatus[trip] ? '⚡ MongoDB' : '📦 Archived'}
+                </div>
+              )}
+              <div className="dashboard-trip-card-hint">View details →</div>
             </Link>
           ))}
         </div>
       )}
 
       {otherTrips.length > 0 && (
-        <div style={{ marginTop: '40px' }}>
+        <div className="dashboard-discover-section">
           <h2>Discover Trips</h2>
-          <div className="trips-grid">
+          <div className="dashboard-trips-grid">
             {otherTrips.map(trip => (
-              <div key={trip} className="trip-card discovery-card">
-                <h3>{trip}</h3>
-                <button onClick={() => joinTrip(trip)} className="join-btn">Request to Join</button>
+              <div key={trip} className="dashboard-discover-card">
+                <div className="dashboard-discover-card-icon">✈️</div>
+                <div className="dashboard-discover-card-name">{trip}</div>
+                {myRequests.includes(trip) ? (
+                  <span className="badge badge-amber">Request Pending</span>
+                ) : (
+                  <button
+                    className="btn btn-ghost btn-sm dashboard-join-btn"
+                    onClick={() => requestJoin(trip)}
+                    disabled={joiningTrips[trip]}
+                  >
+                    {joiningTrips[trip] ? 'Requesting...' : 'Request to Join'}
+                  </button>
+                )}
               </div>
             ))}
-          </div>
-        </div>
-      )}
-
-      {user.isAdmin && (
-        <div className="admin-panel">
-          <h3>Admin Panel: Create Trip</h3>
-          <div className="create-trip-form">
-            <input 
-              type="text" 
-              placeholder="Trip Name" 
-              value={newTripName} 
-              onChange={(e) => setNewTripName(e.target.value)}
-              className="trip-name-input"
-            />
-            <button onClick={createTrip} className="create-btn">Create New Trip</button>
           </div>
         </div>
       )}

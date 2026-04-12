@@ -5,19 +5,26 @@ import './dark.css';
 import './mlight.css';
 import './mdark.css';
 
-function Profile({ user, theme }) {
-  if (!user) return <div>Please log in</div>;
+function Profile({ user }) {
+  if (!user) return null;
 
   return (
-    <div className={`profile-container ${theme}`}>
-      <h2>User Profile</h2>
+    <div className="profile-page">
+      <h2>Profile</h2>
       <div className="profile-card">
-        {user.picture && <img src={user.picture} alt="Profile" className="profile-large-avatar" />}
+        {user.picture
+          ? <img src={user.picture} alt="Profile" className="profile-avatar-img" />
+          : <div className="profile-avatar-initials">{user.name?.charAt(0).toUpperCase()}</div>
+        }
         <div className="profile-info">
-          <p><strong>Name:</strong> {user.name}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Admin Rights:</strong> {user.is_admin ? 'Yes' : 'No'}</p>
-          <p><strong>Status:</strong> <span style={{ color: user.is_active ? 'green' : 'red' }}>{user.is_active ? 'Active' : 'Inactive'}</span></p>
+          <div className="profile-name">{user.name}</div>
+          <div className="profile-email">{user.email}</div>
+          <div className="profile-badges">
+            {user.isAdmin && <span className="badge badge-accent">Admin</span>}
+            <span className={`badge ${user.isActive !== false ? 'badge-green' : 'badge-red'}`}>
+              {user.isActive !== false ? 'Active' : 'Inactive'}
+            </span>
+          </div>
         </div>
       </div>
     </div>

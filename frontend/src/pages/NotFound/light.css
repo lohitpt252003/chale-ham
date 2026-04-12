@@ -1,2 +1,2 @@
-/* Not Found Light */
-.not-found-container.light { color: var(--text-light); }
+.light .not-found-title { color: #1a1d2e; }
+.light .not-found-sub   { color: #6b7280; }

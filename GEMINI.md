@@ -32,9 +32,12 @@ A lightweight expense-sharing web application built for a specific group of frie
 - [x] Added 404 NotFound page.
 
 ## Pending Tasks
-- [ ] End-to-end testing.
-- [ ] Implement Expense deletion (Admin only).
-- [ ] Enhance UI/UX with better styling.
+- [x] End-to-end testing.
+- [x] Implement Expense deletion (Admin only).
+- [x] Enhance UI/UX with better styling (Splitwise Dark/Light Component themes).
+- [x] Integrate Pending Join Requests UI.
+- [x] Build Hybrid Active/Inactive MongoDB Caching layer for Trips.
+- [x] Implement multi-person expense splitting and correct INR Currency display (₹).
 
 ## Environment Variables Required
 - `GITHUB_PAT`: Personal Access Token for GitHub API.

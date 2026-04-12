@@ -5,12 +5,10 @@ import './dark.css';
 import './mlight.css';
 import './mdark.css';
 
-function Footer({ theme }) {
+function Footer() {
   return (
-    <footer className={`footer ${theme}`}>
-      <div className="footer-content">
-        <p>&copy; {new Date().getFullYear()} Chale-Ham - Expense sharing for friends</p>
-      </div>
+    <footer className="footer">
+      <span className="footer-text">Chale Ham &copy; {new Date().getFullYear()}</span>
     </footer>
   );
 }

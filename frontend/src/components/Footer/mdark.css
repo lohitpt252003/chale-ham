@@ -1,4 +1,3 @@
-/* Mobile Footer Dark Styles */
-@media (max-width: 600px) {
-  .footer { padding: 10px; }
+@media (max-width: 640px) {
+  .dark .footer { padding: 10px 14px; }
 }

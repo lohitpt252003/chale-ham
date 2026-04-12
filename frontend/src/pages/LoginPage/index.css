@@ -1,40 +1,159 @@
-.login-page {
+.landing {
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+}
+
+/* ── Hero ── */
+.landing-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
   align-items: center;
-  height: 100vh;
-}
-
-.login-card {
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  justify-content: center;
+  padding: 80px 24px;
+  overflow: hidden;
   text-align: center;
-  width: 100%;
-  max-width: 400px;
 }
 
-.login-card h1 {
-  margin-bottom: 10px;
-  font-size: 28px;
+.landing-hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.login-card p {
-  margin-bottom: 30px;
+.landing-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
 }
 
-.google-login-wrapper {
+.landing-orb-1 {
+  width: 480px;
+  height: 480px;
+  top: -120px;
+  left: -100px;
+  background: radial-gradient(circle, #7c8ff8, transparent 70%);
+}
+
+.landing-orb-2 {
+  width: 400px;
+  height: 400px;
+  bottom: -80px;
+  right: -60px;
+  background: radial-gradient(circle, #a78bfa, transparent 70%);
+}
+
+.landing-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+}
+
+.landing-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 28px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  background: var(--surface);
+}
+
+.landing-title {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.landing-title-accent {
+  background: linear-gradient(120deg, var(--accent) 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.landing-subtitle {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 500px;
+  margin: 0 auto 36px;
+}
+
+.landing-login-wrap {
   display: flex;
   justify-content: center;
+  margin-bottom: 14px;
 }
 
-.login-page.light .login-card {
-  background-color: white;
-  color: #333;
+.landing-login-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
 }
 
-.login-page.dark .login-card {
-  background-color: #2d2d2d;
-  color: #f0f0f0;
-  border: 1px solid #444;
+/* ── Features ── */
+.landing-features {
+  padding: 80px 24px;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.landing-features-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 40px;
+}
+
+.landing-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.landing-feature-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.landing-feature-icon {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+
+.landing-feature-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.landing-feature-desc {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* ── Footer ── */
+.landing-footer {
+  padding: 24px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  margin-top: auto;
 }

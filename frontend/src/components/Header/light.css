@@ -1,26 +1,18 @@
-.header-nav.light {
-  background-color: var(--header-bg-light);
-  color: var(--header-text-light);
+.light .header-nav {
+  background: rgba(255, 255, 255, 0.88);
+  border-bottom-color: #e2e4ea;
+  box-shadow: 0 1px 0 #e2e4ea, 0 2px 12px rgba(0,0,0,0.04);
 }
 
-.header-nav.light .header-logo, .header-nav.light .header-link {
-  color: var(--header-text-light);
-}
+.light .header-nav-link { color: #6b7280; }
+.light .header-nav-link:hover { background: #f3f4f6; color: #1a1d2e; }
+.light .header-nav-link.active { background: #eef0ff; color: #5c6ef8; }
 
-.header-nav.light .header-link:hover {
-  text-decoration: underline;
-}
+.light .header-theme-btn { border-color: #e2e4ea; color: #6b7280; }
+.light .header-theme-btn:hover { background: #f3f4f6; border-color: #5c6ef8; }
 
-.header-nav.light .header-logout-btn {
-  background-color: #e74c3c;
-  color: white;
-}
+.light .header-logout-btn { border-color: #e2e4ea; color: #6b7280; }
+.light .header-logout-btn:hover { background: #fee2e2; color: #ef4444; border-color: #fee2e2; }
 
-.header-nav.light .header-logout-btn:hover {
-  background-color: #c0392b;
-}
-
-.header-nav.light .theme-toggle-btn {
-  background-color: #555;
-  color: white;
-}
+.light .header-avatar { box-shadow: 0 0 0 2px #e2e4ea; }
+.light .header-avatar:hover { box-shadow: 0 0 0 2px #5c6ef8; }

@@ -1,0 +1,24 @@
+@media (max-width: 640px) {
+  .light .how-to-use-body { grid-template-columns: 1fr; }
+
+  .light .how-to-use-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 6px;
+    padding-bottom: 4px;
+    position: static;
+  }
+
+  .light .how-to-use-nav-btn {
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    min-width: 80px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .light .how-to-use-content { padding: 20px 16px; }
+}

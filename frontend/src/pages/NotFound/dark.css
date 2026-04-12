@@ -1,2 +1,2 @@
-/* Not Found Dark */
-.not-found-container.dark { color: var(--text-dark); }
+.dark .not-found-title { color: #e8eaf6; }
+.dark .not-found-sub   { color: #9ca3af; }

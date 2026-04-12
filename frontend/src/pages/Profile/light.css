@@ -1,4 +1,3 @@
-/* Profile Light Theme Styles */
-.profile-container.light {
-  color: var(--text-light);
-}
+.light .profile-card { background: #ffffff; border-color: #e2e4ea; }
+.light .profile-name  { color: #1a1d2e; }
+.light .profile-email { color: #6b7280; }

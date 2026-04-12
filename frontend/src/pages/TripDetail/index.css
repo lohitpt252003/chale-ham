@@ -1,82 +1,308 @@
-.trip-detail-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-bottom: 50px;
-}
-
-.trip-content {
+/* ── Header ── */
+.trip-detail-header-bar {
   display: flex;
-  gap: 40px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
-  margin-top: 30px;
 }
 
-.trip-left-column, .trip-right-column {
+.trip-detail-back {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.trip-detail-back:hover { color: var(--text); }
+
+.trip-detail-title-group {
   flex: 1;
-  min-width: 300px;
-}
-
-.people-list, .balances-list, .expenses-list {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 30px;
-}
-
-.people-list li, .balances-list li {
-  padding: 10px;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-}
-
-.expense-item {
-  padding: 15px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-}
-
-.expense-header {
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-.expense-form-container, .admin-add-person {
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 30px;
-  border: 1px solid;
-}
-
-.expense-form input, .person-form input {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-.split-selection {
-  margin-bottom: 15px;
-}
-
-.checkbox-label {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
+}
+
+.trip-detail-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.trip-detail-storage-badge {
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.trip-detail-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ── Filters ── */
+.trip-detail-filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.trip-detail-filter-search { flex: 1; min-width: 180px; }
+.trip-detail-filter-select  { width: 160px; }
+
+/* ── Expense List ── */
+.trip-detail-expense-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.trip-detail-expense-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  box-shadow: var(--shadow);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.trip-detail-expense-item:hover { border-color: var(--accent-light); }
+
+.trip-detail-expense-icon {
+  text-align: center;
+  min-width: 44px;
+  flex-shrink: 0;
+}
+
+.trip-detail-expense-cat-icon { font-size: 1.3rem; }
+
+.trip-detail-expense-date {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.trip-detail-expense-body { flex: 1; }
+
+.trip-detail-expense-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.trip-detail-expense-meta {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.trip-detail-expense-notes {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.trip-detail-expense-badge { margin-top: 6px; }
+
+.trip-detail-expense-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.trip-detail-expense-amount {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.trip-detail-expense-amount.paid-by-me { color: var(--green); }
+
+.trip-detail-expense-item-actions {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+  justify-content: flex-end;
+}
+
+/* ── Balances ── */
+.trip-detail-balance-list { display: flex; flex-direction: column; gap: 12px; }
+
+.trip-detail-balance-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow);
+}
+
+.trip-detail-balance-label { flex: 1; font-size: 0.95rem; color: var(--text); }
+
+.trip-detail-balance-amount { font-weight: 700; font-size: 1.1rem; }
+.trip-detail-balance-amount.owe  { color: var(--red); }
+.trip-detail-balance-amount.owed { color: var(--green); }
+.trip-detail-balance-amount.other{ color: var(--text-secondary); }
+
+/* ── Settlements ── */
+.trip-detail-settlement-title {
+  margin: 20px 0 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.trip-detail-settlement-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow);
+  opacity: 0.85;
   margin-bottom: 8px;
-  cursor: pointer;
 }
 
-.submit-btn {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: #3498db;
-  color: white;
-  font-weight: bold;
+.trip-detail-settlement-info { flex: 1; font-size: 0.9rem; color: var(--text); }
+.trip-detail-settlement-note  { color: var(--text-muted); }
+.trip-detail-settlement-amount{ font-weight: 600; color: var(--green); }
+.trip-detail-settlement-date  { font-size: 0.75rem; color: var(--text-muted); }
+
+/* ── Stats ── */
+.trip-detail-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }
 
-.submit-btn:hover {
-  background-color: #2980b9;
+.trip-detail-stat-summary {
+  grid-column: 1 / -1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.trip-detail-stat-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.trip-detail-stat-total {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 4px 0;
+}
+
+.trip-detail-stat-sub { font-size: 0.85rem; color: var(--text-secondary); }
+
+.trip-detail-stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.trip-detail-stat-card h3 { margin-bottom: 16px; color: var(--text); }
+
+.trip-detail-stat-row { margin-bottom: 12px; }
+
+.trip-detail-stat-row-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.trip-detail-stat-row-name   { color: var(--text); }
+.trip-detail-stat-row-amount { font-weight: 600; color: var(--text); }
+
+.trip-detail-stat-bar-bg {
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.trip-detail-stat-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.trip-detail-stat-bar-fill.accent { background: var(--accent); }
+.trip-detail-stat-bar-fill.green  { background: var(--green); }
+
+/* ── Members ── */
+.trip-detail-members-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.trip-detail-members-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.trip-detail-member-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.trip-detail-member-item:last-of-type { border-bottom: none; }
+
+.trip-detail-member-info { flex: 1; }
+.trip-detail-member-name  { font-weight: 500; color: var(--text); }
+.trip-detail-member-email { font-size: 0.8rem; color: var(--text-muted); }
+.trip-detail-member-you   { margin-left: auto; }
+
+.trip-detail-add-form {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.trip-detail-add-name  { flex: 1; min-width: 130px; }
+.trip-detail-add-email { flex: 1; min-width: 190px; }
+
+/* ── Modals ── */
+.trip-detail-modal-bulk { max-width: 540px; }
+
+.trip-detail-bulk-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.trip-detail-settle-hint {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }

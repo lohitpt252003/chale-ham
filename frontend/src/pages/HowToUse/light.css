@@ -1,0 +1,27 @@
+.light .how-to-use-header { border-bottom-color: #e5e7eb; }
+
+.light .how-to-use-header h2 { color: #111827; }
+
+.light .how-to-use-subtitle { color: #6b7280; }
+
+.light .how-to-use-nav-btn { color: #4b5563; }
+
+.light .how-to-use-nav-btn:hover { background: #f3f4f6; color: #111827; }
+
+.light .how-to-use-nav-btn.active { background: #ede9fe; color: #7c3aed; }
+
+.light .how-to-use-content {
+  background: #ffffff;
+  border-color: #e5e7eb;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
+.light .how-to-use-section-title { border-bottom-color: #e5e7eb; }
+
+.light .how-to-use-section-title h3 { color: #111827; }
+
+.light .how-to-use-step-badge { background: #7c3aed; }
+
+.light .how-to-use-step-heading { color: #111827; }
+
+.light .how-to-use-step-text { color: #6b7280; }

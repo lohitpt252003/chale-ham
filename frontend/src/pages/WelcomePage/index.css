@@ -1,0 +1,80 @@
+.welcome-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.welcome-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 40px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  animation: welcome-in 0.4s ease;
+}
+
+@keyframes welcome-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.welcome-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent);
+  margin-bottom: 4px;
+}
+
+.welcome-avatar-initials {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.welcome-greeting {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.welcome-name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.welcome-sub {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.welcome-btn {
+  width: 100%;
+  justify-content: center;
+  font-size: 1rem;
+  padding: 12px 24px;
+}
+
+.welcome-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}

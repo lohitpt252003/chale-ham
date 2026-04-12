@@ -1,2 +1,4 @@
-/* Not Found Mobile Light */
-@media (max-width: 600px) { .not-found-container h1 { font-size: 32px; } }
+@media (max-width: 640px) {
+  .light .not-found { padding: 48px 16px; }
+  .light .not-found-title { font-size: 1.4rem; }
+}

@@ -1,6 +1,6 @@
-@media (max-width: 600px) {
-  .login-card {
-    padding: 20px;
-    margin: 10px;
-  }
+@media (max-width: 640px) {
+  .light .landing-hero { padding: 60px 20px; }
+  .light .landing-features { padding: 48px 20px; }
+  .light .landing-features-grid { grid-template-columns: 1fr; }
+  .light .landing-feature-card { padding: 20px; }
 }

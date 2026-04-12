@@ -1,2 +1,4 @@
-/* Not Found Mobile Dark */
-@media (max-width: 600px) { .not-found-container h1 { font-size: 32px; } }
+@media (max-width: 640px) {
+  .dark .not-found { padding: 48px 16px; }
+  .dark .not-found-title { font-size: 1.4rem; }
+}

@@ -1,0 +1,5 @@
+@media (max-width: 640px) {
+  .dark .trips-page-header { align-items: flex-start; flex-direction: column; }
+  .dark .trips-page-search { width: 100%; }
+  .dark .trips-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+}

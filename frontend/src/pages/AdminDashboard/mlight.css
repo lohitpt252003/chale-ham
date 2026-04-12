@@ -1,4 +1,5 @@
-/* Admin Dashboard Mobile Light */
-@media (max-width: 600px) {
-  .admin-table { font-size: 14px; }
+@media (max-width: 640px) {
+  .light .admin-dashboard-req-item { flex-wrap: wrap; }
+  .light .admin-dashboard-req-actions { width: 100%; }
+  .light .admin-dashboard-req-actions .btn { flex: 1; justify-content: center; }
 }

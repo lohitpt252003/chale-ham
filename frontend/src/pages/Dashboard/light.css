@@ -1,15 +1,7 @@
-.dashboard-container.light .trip-card {
-  background-color: var(--card-bg-light);
-  border-color: var(--border-light);
-}
+.light .dashboard-trip-card { background: #ffffff; border-color: #e2e4ea; }
+.light .dashboard-trip-card:hover { background: #f8f9ff; }
+.light .dashboard-trip-card-name { color: #1a1d2e; }
+.light .dashboard-trip-card-hint { color: #9ca3af; }
 
-.dashboard-container.light .admin-panel {
-  background-color: #f9f9f9;
-  border-color: #eee;
-}
-
-.dashboard-container.light .trip-name-input {
-  background-color: white;
-  border-color: #ccc;
-  color: #333;
-}
+.light .dashboard-discover-card { background: #ffffff; border-color: #e2e4ea; }
+.light .dashboard-discover-card-name { color: #1a1d2e; }
